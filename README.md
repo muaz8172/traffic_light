@@ -63,7 +63,7 @@ Clone into the `src` directory of a ROS 2 workspace:
 ```bash
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
-git clone https://github.com/muaz8172/traffic_light.git
+git clone https://github.com/muaz8172/traffic_light2.git
 ```
 
 ## Build
