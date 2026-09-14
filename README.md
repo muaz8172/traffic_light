@@ -167,6 +167,13 @@ Real traffic-light LEDs are far brighter and more saturated than a matte coloure
 
 Topic names, QoS depths, and the `publish_*` flags are rejected at runtime and need a restart; a rejected set reports why and changes nothing.
 
+## Integrations
+
+- [`nodered/`](nodered) — an importable Node-RED flow that calls `traffic_light/lookup` and drives a LIMO's
+  `/cmd_vel` from the result, plus setup notes for the `@chart-sg/node-red-ros2` palette.
+- [`examples/limo_traffic_light_action_client.py`](examples/limo_traffic_light_action_client.py) — a reference
+  `rclpy` action client for `traffic_light/lookup`, meant to be folded into an existing LIMO control node.
+
 ## Repository layout
 
 ```text
@@ -176,6 +183,8 @@ traffic_light/            detector package
   launch/                 Python and YAML launch files
   README.md               full interface and parameter reference
 traffic_light_msgs/       message and action definitions
+nodered/                  Node-RED flow and setup notes
+examples/                 reference LIMO action-client script
 ```
 
 Full parameter tables, stream/action semantics, and the detection algorithm in detail are in [`traffic_light/README.md`](traffic_light/README.md).
