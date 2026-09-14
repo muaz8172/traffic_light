@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+
+launch:
+  - node:
+      pkg: traffic_light
+      exec: traffic_light_node
+      name: traffic_light
+      namespace: ""
+      output: screen
+
+      param:
+        - from: "$(find-pkg-share traffic_light)/config/traffic_light.yaml"

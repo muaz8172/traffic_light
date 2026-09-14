@@ -1,0 +1,23 @@
+%YAML 1.2
+---
+
+launch:
+  - node_container:
+      pkg: rclcpp_components
+      exec: component_container_mt
+      name: traffic_light_container
+      namespace: ""
+      output: screen
+
+      composable_node:
+        - pkg: traffic_light
+          plugin: traffic_light::TrafficLightComponent
+          name: traffic_light
+          namespace: ""
+
+          param:
+            - from: "$(find-pkg-share traffic_light)/config/traffic_light.yaml"
+
+          extra_arg:
+            - name: use_intra_process_comms
+              value: true

@@ -1,0 +1,7 @@
+# Goal: maximum time to wait for the next processable image, in seconds.
+float32 lookup_timeout
+---
+# Result: classification from the image that satisfied the lookup.
+TrafficLight traffic_light
+---
+# No feedback is required for a single-image lookup.

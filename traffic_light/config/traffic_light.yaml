@@ -1,0 +1,75 @@
+traffic_light:
+  ros__parameters:
+    # true: process every image and publish all stream outputs.
+    # false: process only while an action goal is waiting, and publish
+    #        nothing on the stream topics.
+    stream: true
+
+    input_topic: "image"
+    output_topic: "traffic_light/state"
+    action_name: "traffic_light/lookup"
+
+    # Per-colour detection lists and the annotated debug image.
+    # Set either flag to false to skip that work and its publisher.
+    publish_detections: true
+    publish_debug_image: true
+
+    # A PoseArray has no field naming the colour, so each colour gets
+    # its own topic. Pose x/y are full-image pixel coordinates and
+    # z is the detected radius in pixels.
+    detections_topic:
+      red: "traffic_light/detections/red"
+      yellow: "traffic_light/detections/yellow"
+      green: "traffic_light/detections/green"
+
+    debug_image_topic: "traffic_light/debug_image"
+
+    # Input uses sensor-data QoS (best effort, volatile).
+    # Output uses reliable, volatile QoS.
+    input_qos_depth: 1
+    output_qos_depth: 10
+
+    # Keep only the top fraction of the image, where an overhead
+    # traffic light sits. 1.0 keeps the whole frame.
+    keep_top_ratio: 0.55
+
+    # Applied inside the cropped band, not the original image.
+    # All zeros use the complete cropped band.
+    roi:
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+
+    # Set either kernel to 1 to disable that operation.
+    blur_kernel_size: 9
+    morphology_kernel_size: 5
+
+    # Round-candidate filters, applied per contour.
+    min_area_px: 150.0
+    min_radius_px: 10.0
+    min_circularity: 0.75
+
+    # Extra gate on the winning colour: its largest contour area
+    # divided by the processed region area.
+    minimum_area_ratio: 0.002
+
+    # OpenCV HSV ranges: H [0, 179], S/V [0, 255].
+    # Red needs two ranges because hue wraps around zero.
+    #
+    # Hue 11-19 is intentionally left unmatched: it separates red from
+    # yellow so amber-ish background objects do not trip either mask.
+    # Widen yellow.lower down to 11 if you need orange classified.
+    red:
+      lower_1: [0, 120, 70]
+      upper_1: [10, 255, 255]
+      lower_2: [170, 120, 70]
+      upper_2: [179, 255, 255]
+
+    yellow:
+      lower: [20, 100, 100]
+      upper: [35, 255, 255]
+
+    green:
+      lower: [40, 60, 60]
+      upper: [85, 255, 255]
